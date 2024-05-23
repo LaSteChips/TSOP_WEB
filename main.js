@@ -1,21 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path'); // Importer le module path
+const path = require('path');
 const DataManager = require('./datamanager');
 const app = express();
 const port = 3000;
 
-const db = new DataManager('localhost', 'root', '', 'account'); // Ajustez les informations de connexion si nécessaire
+const db = new DataManager('localhost', 'root', '', 'account');
 db.Connect();
 
 // Configurer le moteur de templates EJS
-app.set('views', path.join(__dirname, 'pages')); // Utiliser path.join pour créer le chemin absolu vers le dossier des vues
+app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'ejs');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware pour servir les fichiers statiques depuis le dossier public
+// pour accéder aux fichiers CSS
 app.use(express.static(path.join(__dirname, 'pages')));
 
 // Page d'accueil (également la page de connexion)
@@ -43,7 +43,15 @@ app.post('/create', (req, res) => {
 
 // Page pour supprimer un compte
 app.get('/delete', (req, res) => {
-    res.render('delete', { message: null });
+    const sql = 'SELECT user FROM account_data';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.render('delete', { message: 'Erreur lors de la récupération des utilisateurs.', users: [], query: req.query });
+            return;
+        }
+        res.render('delete', { message: null, users: results, query: req.query });
+    });
 });
 
 app.post('/delete', (req, res) => {
@@ -52,13 +60,13 @@ app.post('/delete', (req, res) => {
     db.query(sql, [username, password], (err, result) => {
         if (err) {
             console.error(err);
-            res.render('delete', { message: 'Erreur lors de la suppression du compte.' });
+            res.redirect('/delete?error=1');
             return;
         }
         if (result.affectedRows > 0) {
-            res.render('delete', { message: 'Compte supprimé avec succès.' });
+            res.redirect('/delete?success=1');
         } else {
-            res.render('delete', { message: 'Identifiant ou mot de passe incorrect.' });
+            res.redirect('/delete?error=1');
         }
     });
 });

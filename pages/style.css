@@ -1,5 +1,9 @@
 body {
     background-color: rgb(56, 53, 53);
-    color: red;
+    color: whitesmoke;
     text-align: center;
+}
+
+a {
+    color: rgb(235, 0, 0);
 }
