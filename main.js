@@ -100,14 +100,6 @@ app.post('/delete', (req, res) => {
     });
   });  
 
-app.get('/welcome', (req, res) => {
-  if (req.session.user) {
-    res.send(`Bienvenue ${req.session.user.username}`);
-  } else {
-    res.redirect('/');
-  }
-});
-
 app.listen(port, () => {
   console.log(`Serveur en cours d'exécution sur le port ${port}`);
 });
