@@ -1,0 +1,6 @@
+utiliser bcrypt
+finir html/css
+
+
+a installer : 
+dotenv

@@ -7,3 +7,13 @@ body {
 a {
     color: rgb(235, 0, 0);
 }
+
+ul {
+    padding: 20px;
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: left;
+    margin: 20px auto;
+    width: 120px;
+}

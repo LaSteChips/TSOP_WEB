@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un compte</title>
+    <link rel="stylesheet" href="/pages/style.css">
+</head>
+<body>
+    <h1>Créer un compte</h1>
+    <form action="/signup" method="post">
+        Identifiant: <input type="text" name="username" required><br>
+        Mot de passe: <input type="password" name="password" required><br>
+        <button type="submit">Créer un compte</button>
+    </form>
+    <h3>Liste des utilisateurs :</h3>
+    <ul>
+        <% users.forEach(user => { %>
+            <li><%= user.username %></li>
+        <% }); %>
+    </ul>
+    <br>
+    <p>Déjà un compte ? <a href="/">Connectez-vous ici</a></p>
+</body>
+</html>

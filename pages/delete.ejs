@@ -2,42 +2,23 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Suppression de compte</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Supprimer un compte</title>
+    <link rel="stylesheet" href="/pages/style.css">
 </head>
 <body>
     <h1>Supprimer un compte</h1>
-
-    <% if (message) { %>
-        <p><%= message %></p>
-    <% } %>
-
     <form action="/delete" method="post">
         Identifiant: <input type="text" name="username" required><br>
         Mot de passe: <input type="password" name="password" required><br>
         <button type="submit">Supprimer</button>
     </form>
-
-    <h2>Liste des utilisateurs</h2>
+    <h3>Liste des utilisateurs :</h3>
     <ul>
-        <% users.forEach(function(user) { %>
-            <li><%= user.user %></li>
-        <% }) %>
+        <% users.forEach(user => { %>
+            <li><%= user.username %></li>
+        <% }); %>
     </ul>
-
-    <p>Pas de compte ? <a href="/create">Créez en un ici</a></p>
-    <p>Vous avez déjà un compte ? <a href="/login">Connectez-vous ici</a></p>
-
-    <script>
-        // Actualiser la page après suppression d'un utilisateur
-        if (query.success) {
-            alert('Compte supprimé avec succès.');
-            window.location.href = '/delete';
-        }
-        if (query.error) {
-            alert('Identifiant ou mot de passe incorrect.');
-            window.location.href = '/delete';
-        }
-    </script>
+    <br>
+    <p><a href="/">Retour à la page de connexion</a></p>
 </body>
 </html>
