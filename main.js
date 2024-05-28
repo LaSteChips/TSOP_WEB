@@ -20,7 +20,7 @@ app.use(session({
 }));
 
 // Définir le dossier contenant les fichiers statiques (CSS, images, etc.)
-app.use(express.static(__dirname));
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.set('views', './pages');
