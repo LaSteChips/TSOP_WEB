@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un compte</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Créer un compte</h1>
+    <form id="signupForm">
+        Identifiant: <input type="text" id="username" required><br>
+        Mot de passe: <input type="password" id="password" required><br>
+        <button type="submit">Créer un compte</button>
+    </form>
+
+    <p>Pour vous connecter et accéder au jeux<a href="/index.html">cliquez ici</a></p>
+    <p>Pour au contraire le supprimer, <a href="/delete.html">cliquez ici</a></p>
+
+    <h3>Liste des utilisateurs :</h3>
+    <ul id="userList">
+        <!-- La liste des utilisateurs sera affichée ici -->
+    </ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const signupForm = document.getElementById("signupForm");
+            const userList = document.getElementById("userList");
+
+            // Fonction pour charger les utilisateurs depuis localStorage
+            function loadUsers() {
+                const users = JSON.parse(localStorage.getItem("users")) || {};  // Charger les utilisateurs
+                userList.innerHTML = "";  // Vider la liste avant de l'actualiser
+
+                if (Object.keys(users).length === 0) {
+                    userList.innerHTML = "<li>Aucun utilisateur inscrit</li>";
+                } else {
+                    // Afficher les utilisateurs dans la liste
+                    for (const user in users) {
+                        const li = document.createElement("li");
+                        li.textContent = user;
+                        userList.appendChild(li);
+                    }
+                }
+            }
+
+            // Afficher les utilisateurs au chargement de la page
+            loadUsers();
+
+            // Gestion de l'inscription
+            if (signupForm) {
+                signupForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+
+                    let users = JSON.parse(localStorage.getItem("users")) || {}; // Récupérer les utilisateurs existants
+
+                    console.log("Formulaire soumis - Utilisateur:", username);  // Ajout d'un log pour vérifier l'utilisateur
+
+                    if (users[username]) {
+                        alert("Ce nom d'utilisateur existe déjà !");
+                    } else {
+                        users[username] = password;
+                        localStorage.setItem("users", JSON.stringify(users));  // Sauvegarder dans localStorage
+                        console.log("Utilisateur ajouté:", username);  // Log pour vérifier que l'utilisateur est ajouté
+                        alert("Compte créé avec succès !");
+                        loadUsers(); // Recharger la liste des utilisateurs
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
