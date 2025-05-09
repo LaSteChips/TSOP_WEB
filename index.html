@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Se connecter</h1>
+    <form id="loginForm">
+        Identifiant: <input type="text" id="loginUsername" required><br>
+        Mot de passe: <input type="password" id="loginPassword" required><br>
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <p>Pour créer un compte, <a href="signup.html">cliquez ici</a></p>
+    <p>Pour au contraire en supprimer, <a href="delete.html">cliquez ici</a></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.getElementById("loginForm");
+
+            // Gestion de la connexion
+            if (loginForm) {
+                loginForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                
+                    const username = document.getElementById("loginUsername").value;
+                    const password = document.getElementById("loginPassword").value;
+                
+                    let users = JSON.parse(localStorage.getItem("users")) || {}; // Charger les utilisateurs depuis localStorage
+                
+                    if (users[username] && users[username] === password) {
+                        alert("Connexion réussie !");
+
+                        // Créer un lien de téléchargement et simuler un clic dessus
+                        const link = document.createElement("a");
+                        link.href = "https://github.com/LaSteChips/TSOP/archive/refs/heads/main.zip"; // Lien du fichier à télécharger
+                        link.download = "TSOP.zip"; // Nom du fichier à télécharger
+                        link.click(); // Simule le clic pour démarrer le téléchargement
+
+                        // Rediriger éventuellement vers une autre page ou fermer la connexion
+                        // window.location.href = "page_succes.html"; // Rediriger si nécessaire
+                    } else {
+                        alert("Identifiant ou mot de passe incorrect !");
+                    }
+                });
+            }
+        });
+
+    </script>
+    
+    <br>
+    <br>
+    <br>
+
+    <h2>Politique de confidentialité</h2>
+    <p>Vos identifiants et mots de passe sont stocker localement dans votre navigateur et non sur une base de données.</p>
+    <p>Il existe 2 versions de ce projet, une avec une base de données fixe et celle-ci en version web qui est une version d'essai et de démonstration.</p>
+    <p>Si vous voulez tester le projet initial, <a href="https://github.com/LaSteChips/TSOP_WEB" target="_blank">cliquez ici</a> pour télécharger le zip, des consignes d'installation y sont fournies.</p>
+
+</body>
+</html>
